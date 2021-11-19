@@ -20,7 +20,7 @@ pub fn redis_json_value(input: TokenStream) -> TokenStream {
         impl redis::ToRedisArgs for &#struct_type {
             fn write_redis_args<W>(&self, out: &mut W)
             where
-                W: ?Sized + RedisWrite
+                W: ?Sized + redis::RedisWrite
             {
                         out.push(serde_json::to_vec(self).expect("successful json encoding"));
             }
