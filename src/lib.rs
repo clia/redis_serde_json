@@ -22,7 +22,7 @@ pub fn redis_json_value(input: TokenStream) -> TokenStream {
             where
                 W: ?Sized + redis::RedisWrite
             {
-                        out.push(serde_json::to_vec(self).expect("successful json encoding"));
+                        out.write_arg(&serde_json::to_vec(self).expect("json encoding failed"));
             }
         }
 
