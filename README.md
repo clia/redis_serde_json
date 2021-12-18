@@ -14,7 +14,10 @@ redis_serde_json = { git = "https://github.com/clia/redis_serde_json.git" }
 main.rs:
 
 ```rust
+use std::sync::Arc;
+
 use redis_serde_json::RedisJsonValue;
+use deadpool_redis::{redis::cmd, Pool as RedisPool};
 
 #[derive(RedisJsonValue)]
 struct User {
