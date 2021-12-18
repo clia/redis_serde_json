@@ -29,7 +29,7 @@ pub async fn add_user(
     redis_pool: Arc<RedisPool>,
     user: User,
 ) -> Result<usize> {
-    let mut conn = redis_pool.get().await.unwrap();
+    let mut conn = redis_pool.get().await?;
     let res: usize = cmd("SADD")
         .arg("Users")
         .arg(&user)
@@ -42,7 +42,7 @@ pub async fn add_user(
 pub async fn get_users(
     redis_pool: Arc<RedisPool>,
 ) -> Result<Vec<User>> {
-    let mut conn = redis_pool.get().await.unwrap();
+    let mut conn = redis_pool.get().await?;
     let res: Vec<User> = cmd("SMEMBERS").arg("Users").query_async(&mut conn).await?;
 
     Ok(res)
