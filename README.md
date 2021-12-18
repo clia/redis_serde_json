@@ -41,7 +41,7 @@ pub async fn add_user(
 
 pub async fn get_users(
     redis_pool: Arc<RedisPool>,
-) -> Result<Vec<VNodeClientInfo>> {
+) -> Result<Vec<User>> {
     let mut conn = redis_pool.get().await.unwrap();
     let res: Vec<User> = cmd("SMEMBERS").arg("Users").query_async(&mut conn).await?;
 
