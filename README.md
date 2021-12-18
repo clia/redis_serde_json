@@ -16,10 +16,11 @@ main.rs:
 ```rust
 use std::sync::Arc;
 
-use redis_serde_json::RedisJsonValue;
 use deadpool_redis::{redis::cmd, Pool as RedisPool};
+use redis_serde_json::RedisJsonValue;
+use serde::{Deserialize, Serialize};
 
-#[derive(RedisJsonValue)]
+#[derive(Serialize, Deserialize, RedisJsonValue)]
 pub struct User {
     pub id: u64,
     pub name: String,
