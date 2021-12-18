@@ -17,8 +17,31 @@ main.rs:
 use redis_serde_json::RedisJsonValue;
 
 #[derive(RedisJsonValue)]
-struct Example {
-    id: i32,
+struct User {
+    id: u64,
     name: String,
+}
+
+pub async fn add_user(
+    redis_pool: Arc<RedisPool>,
+    user: User,
+) -> Result<usize> {
+    let mut conn = redis_pool.get().await.unwrap();
+    let res: usize = cmd("SADD")
+        .arg("Users")
+        .arg(&user)
+        .query_async(&mut conn)
+        .await?;
+
+    Ok(res)
+}
+
+pub async fn get_users(
+    redis_pool: Arc<RedisPool>,
+) -> Result<Vec<VNodeClientInfo>> {
+    let mut conn = redis_pool.get().await.unwrap();
+    let res: Vec<User> = cmd("SMEMBERS").arg("Users").query_async(&mut conn).await?;
+
+    Ok(res)
 }
 ```
