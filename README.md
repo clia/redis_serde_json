@@ -20,9 +20,9 @@ use redis_serde_json::RedisJsonValue;
 use deadpool_redis::{redis::cmd, Pool as RedisPool};
 
 #[derive(RedisJsonValue)]
-struct User {
-    id: u64,
-    name: String,
+pub struct User {
+    pub id: u64,
+    pub name: String,
 }
 
 pub async fn add_user(
