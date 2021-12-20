@@ -16,6 +16,7 @@ main.rs:
 ```rust
 use std::sync::Arc;
 
+use anyhow::Result;
 use deadpool_redis::{redis::cmd, Pool as RedisPool};
 use redis_serde_json::RedisJsonValue;
 use serde::{Deserialize, Serialize};
