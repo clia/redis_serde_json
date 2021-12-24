@@ -22,7 +22,7 @@ pub fn redis_json_value(input: TokenStream) -> TokenStream {
         where
           W: ?Sized + redis::RedisWrite,
         {
-          out.write_arg(&serde_json::to_vec(self).expect("json encoding failed"));
+          out.write_arg(&serde_json::to_vec(self).expect("JSON encoding failed"));
         }
       }
       
@@ -32,14 +32,14 @@ pub fn redis_json_value(input: TokenStream) -> TokenStream {
             redis::Value::Data(ref bytes) => Ok(serde_json::from_slice(bytes).map_err(|err| {
               (
                 redis::ErrorKind::TypeError,
-                "json deserialize failed",
+                "JSON deserialize failed",
                 err.to_string(),
               )
             })?),
             _ => Err(
               (
                 redis::ErrorKind::TypeError,
-                "invalid response type for json",
+                "invalid response type for JSON",
               )
                 .into(),
             ),
