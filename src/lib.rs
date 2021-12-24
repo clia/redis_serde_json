@@ -17,7 +17,7 @@ pub fn redis_json_value(input: TokenStream) -> TokenStream {
   let struct_type = input.ident;
 
   let expanded = quote! {
-    impl redis::ToRedisArgs for &#struct_type {
+    impl redis::ToRedisArgs for #struct_type {
         fn write_redis_args<W>(&self, out: &mut W)
         where
           W: ?Sized + redis::RedisWrite,
