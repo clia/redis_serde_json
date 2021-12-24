@@ -23,30 +23,30 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, RedisJsonValue)]
 pub struct User {
-    pub id: u64,
-    pub name: String,
+  pub id: u64,
+  pub name: String,
 }
 
 pub async fn add_user(
-    redis_pool: Arc<RedisPool>,
-    user: User,
+  redis_pool: Arc<RedisPool>,
+  user: User,
 ) -> Result<usize> {
-    let mut conn = redis_pool.get().await?;
-    let res: usize = cmd("SADD")
-        .arg("Users")
-        .arg(&user)
-        .query_async(&mut conn)
-        .await?;
+  let mut conn = redis_pool.get().await?;
+  let res: usize = cmd("SADD")
+    .arg("Users")
+    .arg(&user)
+    .query_async(&mut conn)
+    .await?;
 
-    Ok(res)
+  Ok(res)
 }
 
 pub async fn get_users(
-    redis_pool: Arc<RedisPool>,
+  redis_pool: Arc<RedisPool>,
 ) -> Result<Vec<User>> {
-    let mut conn = redis_pool.get().await?;
-    let res: Vec<User> = cmd("SMEMBERS").arg("Users").query_async(&mut conn).await?;
+  let mut conn = redis_pool.get().await?;
+  let res: Vec<User> = cmd("SMEMBERS").arg("Users").query_async(&mut conn).await?;
 
-    Ok(res)
+  Ok(res)
 }
 ```
